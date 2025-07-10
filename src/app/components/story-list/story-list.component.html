@@ -1,0 +1,20 @@
+<app-loader *ngIf="loading"></app-loader>
+
+<app-search *ngIf="!loading" (search)="onSearch($event)"></app-search>
+
+<ul *ngIf="!loading && displayedStories.length">
+  <li *ngFor="let story of displayedStories">
+    <a *ngIf="story.url; else noLink" [href]="story.url" target="_blank">{{
+      story.title
+    }}</a>
+    <ng-template #noLink>{{ story.title }}</ng-template>
+  </li>
+</ul>
+
+<p *ngIf="!loading && !displayedStories.length">No stories found.</p>
+
+<div *ngIf="!loading && filteredStories.length > pageSize">
+  <button (click)="onPrevPage()" [disabled]="page === 1">Previous</button>
+  <span>Page {{ page }}</span>
+  <button (click)="onNextPage()" [disabled]="page === totalPages">Next</button>
+</div>
